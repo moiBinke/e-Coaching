@@ -40,7 +40,20 @@ public class Lecon implements Serializable {
     @JoinColumn(name = "matiere_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    Matiere matiere;
+    private Matiere matiere;
+		
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Matiere getMatiere() {
+		return matiere;
+	}
+	public void setMatieres(Matiere matiere) {
+		this.matiere = matiere;
+	}
 	public String getNom() {
 		return nom;
 	}

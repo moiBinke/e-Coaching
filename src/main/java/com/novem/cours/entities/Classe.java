@@ -33,17 +33,29 @@ public class Classe implements Serializable{
 	private String nom;
 	@OneToMany(mappedBy = "classe")
 	private Collection<Matiere> matieres;
-	public String getNom() {
-		return nom;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "lecon_id", nullable = false)
+    @JoinColumn(name = "professeur_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Professeur professeur;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cycle_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Cycle cycle;
 	
+	
+	public Cycle getCycle() {
+		return cycle;
+	}
+	public void setCycle(Cycle cycle) {
+		this.cycle = cycle;
+	}
+	public String getNom() {
+		return nom;
+	}
 	public Long getId() {
 		return id;
 	}
