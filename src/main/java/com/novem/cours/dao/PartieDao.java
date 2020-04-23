@@ -1,5 +1,7 @@
 package com.novem.cours.dao;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -10,5 +12,7 @@ import com.novem.cours.entities.Partie;
 public interface PartieDao extends JpaRepository<Partie, Long> {
 
 	public boolean existsByNomAndLecon(String nom, Lecon lecon);
+
+	public Collection<Partie> findByLeconId(Long idLecon);
 
 }

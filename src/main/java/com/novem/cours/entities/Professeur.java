@@ -33,11 +33,21 @@ public class Professeur implements Serializable{
 	@Column
 	private String motDePasse;
 	@Column
+	private  Role role ;
+	@Column
 	private String photo;
+	@Column
+	private boolean active;
 	@OneToMany(mappedBy = "professeur")
 	private Collection<Classe> classes;
 	
 	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public Long getId() {
 		return id;
 	}

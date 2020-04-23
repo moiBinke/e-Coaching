@@ -39,6 +39,19 @@ public class PartieException extends Exception{
 		
 		
 	}
+	public static class PartieContenuException extends PartieException{
+
+		public PartieContenuException() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public PartieContenuException(String message) {
+			super(message);
+			// TODO Auto-generated constructor stub
+		}
+		
+	}
 
 	
 }

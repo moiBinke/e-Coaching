@@ -51,7 +51,7 @@ public class Lecon implements Serializable {
 	public Matiere getMatiere() {
 		return matiere;
 	}
-	public void setMatieres(Matiere matiere) {
+	public void setMatiere(Matiere matiere) {
 		this.matiere = matiere;
 	}
 	public String getNom() {

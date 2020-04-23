@@ -9,17 +9,20 @@ import com.novem.cours.exceptions.LeconException.LeconNameExistException;
 import static com.novem.cours.exceptions.LeconException.*;
 ;public class LeconValidator {
 	
-	@Autowired public static LeconDao leconDao;
 	
-	public static void validate(Matiere matiere,String nom) throws LeconNameExistException {
-		 validateName(matiere, nom);
+	public static void validate(Matiere matiere,String nom,LeconDao leconDao) throws LeconNameExistException {
+		 validateName(matiere, nom,leconDao);
 	}
 	
-	public static void validateName(Matiere matiere,String nom) throws LeconNameExistException{
-		if(leconDao.existsByNomAndMatiere(nom,matiere)) {
-			throw new LeconNameExistException("Une lecon de meme nom existe dejà");
+	public static void validateName(Matiere matiere,String nom,LeconDao leconDao) throws LeconNameExistException{
+		if(nom!=null && !nom.trim().equals("")) {
+			if(leconDao.existsByNomAndMatiere(nom,matiere)) {
+				throw new LeconNameExistException("Une lecon de meme nom existe dejà");
+
+			}
+		}else {
+			throw new LeconNameExistException("Une lecon ne peut pas avoir un nom null");	
 		}
-	}
-	
+	}	
 
 }

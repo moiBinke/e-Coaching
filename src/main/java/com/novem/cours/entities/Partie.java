@@ -32,7 +32,8 @@ public class Partie implements Serializable{
 	private String lienVideo;
 	@Column
 	private String lienDocument;
-	
+	@Column
+	private String nomAuteur;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lecon_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -69,6 +70,13 @@ public class Partie implements Serializable{
 	}
 	public void setLienDocument(String lienDocument) {
 		this.lienDocument = lienDocument;
+	}
+	
+	public String getNomAuteur() {
+		return nomAuteur;
+	}
+	public void setNomAuteur(String nomAuteur) {
+		this.nomAuteur = nomAuteur;
 	}
 	public Partie() {
 		

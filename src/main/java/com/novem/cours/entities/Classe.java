@@ -34,8 +34,8 @@ public class Classe implements Serializable{
 	@OneToMany(mappedBy = "classe")
 	private Collection<Matiere> matieres;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "professeur_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "professeur_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Professeur professeur;

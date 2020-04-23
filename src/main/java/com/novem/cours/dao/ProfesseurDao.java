@@ -8,4 +8,6 @@ import com.novem.cours.entities.Professeur;
 @RepositoryRestResource
 public interface ProfesseurDao extends JpaRepository<Professeur,Long> {
 
+	public boolean existsByEmail(String email);
+
 }
