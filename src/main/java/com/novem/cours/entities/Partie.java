@@ -1,6 +1,7 @@
 package com.novem.cours.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -34,6 +35,8 @@ public class Partie implements Serializable{
 	private String lienDocument;
 	@Column
 	private String nomAuteur;
+	@Column 
+	private LocalDateTime datePublication;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "lecon_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -41,6 +44,12 @@ public class Partie implements Serializable{
     private Lecon lecon;
 	
 	
+	public LocalDateTime getDatePublication() {
+		return datePublication;
+	}
+	public void setDatePublication(LocalDateTime datePublication) {
+		this.datePublication = datePublication;
+	}
 	public Long getId() {
 		return id;
 	}

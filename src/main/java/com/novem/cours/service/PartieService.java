@@ -1,5 +1,6 @@
 package com.novem.cours.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class PartieService {
 	public Partie lierPartieALaLecon(Long idLecon,Partie partie) throws PartieLeconNotFound {
 		return leconDao.findById(idLecon).map(lecon->{
 			partie.setLecon(lecon);
+			partie.setDatePublication(LocalDateTime.now());
 			return partieDao.save(partie);
 		}).orElseThrow(()->new PartieLeconNotFound("la leçon avec id: " + idLecon + " n'existe pas"));
 	}
-	
+
 	public Partie creerPartie(Optional<Lecon> lecon, Partie partie) throws PartieLeconNotFound {
 		return lierPartieALaLecon(lecon.get().getId(), partie);
 	}

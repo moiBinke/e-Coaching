@@ -2,7 +2,7 @@ package com.novem.cours.entities;
 
 public enum Role {
 
-	Professeur,
-	Admin,
-	Bibliothécaire
+	ROLE_PROFESSEUR,
+	ROLE_ADMIN,
+	ROLE_BIBLIOTECAIRE
 }

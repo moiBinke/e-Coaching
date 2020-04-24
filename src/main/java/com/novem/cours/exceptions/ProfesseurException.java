@@ -50,6 +50,34 @@ public class ProfesseurException extends Exception{
 		}
 		
 	}
-
 	
+	public static class ProfesseurClassDejaAffecte extends ProfesseurException{
+
+		public ProfesseurClassDejaAffecte() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public ProfesseurClassDejaAffecte(String message) {
+			super(message);
+			// TODO Auto-generated constructor stub
+		}
+		
+	}
+
+	public static class ProfesseurWrongPassword extends ProfesseurException{
+
+		public ProfesseurWrongPassword() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public ProfesseurWrongPassword(String message) {
+			super(message);
+			// TODO Auto-generated constructor stub
+		}
+		
+	}
+
+
 }

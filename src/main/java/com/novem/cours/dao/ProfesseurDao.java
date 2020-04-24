@@ -10,4 +10,6 @@ public interface ProfesseurDao extends JpaRepository<Professeur,Long> {
 
 	public boolean existsByEmail(String email);
 
+	public Professeur findByEmailAndMotDePasse(String email, String password);
+
 }

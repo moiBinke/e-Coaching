@@ -42,6 +42,12 @@ public class Professeur implements Serializable{
 	private Collection<Classe> classes;
 	
 	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 	public Role getRole() {
 		return role;
 	}
@@ -92,6 +98,7 @@ public class Professeur implements Serializable{
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	
 	
 
 }
