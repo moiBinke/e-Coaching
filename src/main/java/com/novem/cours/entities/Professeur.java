@@ -98,6 +98,12 @@ public class Professeur implements Serializable{
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	@Override
+	public String toString() {
+		return "Professeur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", motDePasse="
+				+ motDePasse + ", role=" + role + ", photo=" + photo + ", active=" + active + ", classes=" + classes
+				+ "]";
+	}
 	
 	
 

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +42,6 @@ public class ProfesseurController {
 			@RequestBody Professeur professeur) {
 		Map<String, String>errors=new HashMap<String, String>();
 		String [] listeIdClasse = lesIdClasses.split("_");
-		System.out.println(listeIdClasse);
 		try {
 			ProfesseurValidator.validate(professeur, classeDao, listeIdClasse,professeurDao);
 			return new ResponseEntity<Object>(professeurService.creerProfesseur(professeur,listeIdClasse),HttpStatus.OK);
@@ -64,9 +64,30 @@ public class ProfesseurController {
 		
 		
 	}
+	
 	@GetMapping("/{email}/{password}")
 	public Professeur getProfesseur(@PathVariable("email")String email,@PathVariable("password") String password) {
 		return professeurService.findByEmailAndPassword(email,password);
+	}
+	
+	@PatchMapping("/modifier")
+	public ResponseEntity<Object> modifierIdentifiant(@RequestBody Professeur professeur){
+		System.out.println(professeur);
+		Map<String, String>errors=new HashMap<String, String>();
+		try {
+			ProfesseurValidator.validateEmailSyntax(professeur.getEmail());
+			ProfesseurValidator.validatePassword(professeur.getMotDePasse());
+			return new ResponseEntity<Object>(professeurService.modifierProfesseur(professeur),HttpStatus.OK);
+		} catch (ProfesseurEmailNotCorrect e) {
+			errors.put("erreur", e.getMessage());
+			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);			
+		} catch (ProfesseurEmailExist e) {
+			errors.put("erreur", e.getMessage());
+			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (ProfesseurWrongPassword e) {
+			errors.put("erreur", e.getMessage());
+			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
+		} 
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.novem.cours.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -8,6 +10,7 @@ import com.novem.cours.dao.ClasseDao;
 import com.novem.cours.dao.ProfesseurDao;
 import com.novem.cours.entities.Classe;
 import com.novem.cours.entities.Professeur;
+import com.novem.cours.exceptions.ProfesseurException;
 import com.novem.cours.validators.PasswordEncryption;
 
 @Service
@@ -40,5 +43,29 @@ public class ProfesseurService {
 		return professeur;
 
 	}
+	
+	public Optional<Professeur> modifierProfesseur(Professeur professeur) throws ProfesseurException.ProfesseurEmailExist {
+		Optional<Professeur> professeurInDataBase=this.professeurDao.findById(professeur.getId());
+		if(professeurInDataBase.isPresent()) {
+			if(!professeurInDataBase.get().getEmail().equals(professeur.getEmail())) {
+				if(this.professeurDao.existsByEmail(professeur.getEmail())) {
+					throw new ProfesseurException.ProfesseurEmailExist("Un professeur porte déjà la même adresse email");
+				}
+				else {
+					professeurInDataBase.get().setEmail(professeur.getEmail());
+				}
+			}
+			professeurInDataBase.get().setNom(professeur.getNom());;
+			professeurInDataBase.get().setMotDePasse(PasswordEncryption.encrypt(professeur.getMotDePasse()));
+			professeurInDataBase.get().setPrenom(professeur.getPrenom());
+			professeurInDataBase.get().setPhoto(professeur.getPhoto());
+			professeur = this.professeurDao.save(professeurInDataBase.get());
+			String passwordDecrypted=PasswordEncryption.decrypt(professeur.getMotDePasse());
+			professeur.setMotDePasse(passwordDecrypted);
+			return Optional.ofNullable(professeur);
+		}
+		return Optional.empty();
+	}
+
 
 }
