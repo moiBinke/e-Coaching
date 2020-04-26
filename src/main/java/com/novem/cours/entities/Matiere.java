@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class Matiere  implements Serializable{
 	private Long id;
 	@Column
 	private String nom;
-	@OneToMany(mappedBy = "matiere")
+	@OneToMany(mappedBy = "matiere",cascade = CascadeType.REMOVE)
 	private Collection<Lecon> lecons;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

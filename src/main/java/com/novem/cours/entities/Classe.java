@@ -36,7 +36,6 @@ public class Classe implements Serializable{
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "professeur_id", nullable = true)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Professeur professeur;
 	

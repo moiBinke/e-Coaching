@@ -34,7 +34,7 @@ public class Professeur implements Serializable{
 	private String motDePasse;
 	@Column
 	private  Role role ;
-	@Column
+	@Column(length = 255)
 	private String photo;
 	@Column
 	private boolean active;

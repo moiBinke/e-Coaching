@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,14 +50,14 @@ public class PartieController {
 			PartieValidator.validate(lecon.get(), partie, partieDao);
 			return new ResponseEntity<Object>(partieService.creerPartie(lecon,partie),HttpStatus.OK);
 		} catch (PartieNameExistException e) {
-			errors.put("nameError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (PartieLeconNotFound e) {
-			errors.put("leconNotExistError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 
 		} catch (PartieContenuException e) {
-			errors.put("contentError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -64,6 +65,12 @@ public class PartieController {
 	@GetMapping("/lecons/{idLecon}")
 	public Collection<Partie> getPartiesOfLecon(@PathVariable("idLecon")Long idLecon ){
 		return partieDao.findByLeconId(idLecon);
+	}
+	
+	@DeleteMapping("/supprimer/{idPartie}")
+	public void supprimer(@PathVariable("idPartie")Long idPartie) {
+		 partieDao.deleteById(idPartie);
+		
 	}
 	
 }

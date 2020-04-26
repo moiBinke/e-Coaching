@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class Lecon implements Serializable {
 	private Long id;
 	@Column
 	private String nom;
-	@OneToMany(mappedBy = "lecon")
+	@OneToMany(mappedBy = "lecon",cascade = CascadeType.REMOVE)
 	private Collection<Partie> parties;
 	
 

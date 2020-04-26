@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,15 +53,19 @@ public class LeconController {
 			LeconValidator.validate(matiere.get(), lecon.getNom(),leconDao);
 		    return new ResponseEntity<Object>(leconService.creerLecon(matiere,lecon),HttpStatus.OK);
 		} catch (LeconNameExistException e) {
-			errors.put("nameError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (LeconMatiereNotFound e) {
-			errors.put("matiereNotExistsErrors", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 	
+	@DeleteMapping("/supprimer/{idLecon}")
+	public void supprimerLecon(@PathVariable("idLecon")Long idLecon) {
+		leconDao.deleteById(idLecon);
+	}
 	@GetMapping("/matieres/{idMatiere}")
 	public Collection<Lecon> findMyMatieres(@PathVariable("idMatiere")Long idMatiere){
 		return leconDao.findByMatiereId(idMatiere);
