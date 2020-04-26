@@ -1,7 +1,9 @@
 package com.novem.cours.controllers;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.novem.cours.dao.ClasseDao;
 import com.novem.cours.dao.ProfesseurDao;
+import com.novem.cours.entities.Classe;
 import com.novem.cours.entities.Professeur;
 import com.novem.cours.exceptions.ProfesseurException.ProfesseurClassDejaAffecte;
 import com.novem.cours.exceptions.ProfesseurException.ProfesseurClassNotFoun;
@@ -67,6 +70,7 @@ public class ProfesseurController {
 	
 	@GetMapping("/{email}/{password}")
 	public Professeur getProfesseur(@PathVariable("email")String email,@PathVariable("password") String password) {
+		System.out.println(password+"  "+email);
 		return professeurService.findByEmailAndPassword(email,password);
 	}
 	
@@ -90,5 +94,12 @@ public class ProfesseurController {
 		} 
 	}
 	
-	
+	@GetMapping("/{idProfesseur}/classes")
+	public Optional<Collection<Classe>> chercherLesClassesDeCeProf(@PathVariable("idProfesseur")Long idProfesseur){
+		Optional<Professeur> professeur= professeurDao.findById(idProfesseur);
+		if(professeur.isPresent()) {
+			return Optional.ofNullable(professeur.get().getClasses());
+		}
+		return Optional.empty();
+	}
 }

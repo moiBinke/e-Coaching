@@ -38,6 +38,7 @@ public class ProfesseurService {
 	public Professeur findByEmailAndPassword(String email, String password) {
 	    password= PasswordEncryption.encrypt(password);
 		Professeur professeur=professeurDao.findByEmailAndMotDePasse(email,password);
+		System.out.println("professeur:  "+professeur);
 		String passwordDecrypted=PasswordEncryption.decrypt(professeur.getMotDePasse());
 		professeur.setMotDePasse(passwordDecrypted);
 		return professeur;
@@ -59,8 +60,9 @@ public class ProfesseurService {
 			professeurInDataBase.get().setMotDePasse(PasswordEncryption.encrypt(professeur.getMotDePasse()));
 			professeurInDataBase.get().setPrenom(professeur.getPrenom());
 			professeurInDataBase.get().setPhoto(professeur.getPhoto());
+			
 			professeur = this.professeurDao.save(professeurInDataBase.get());
-			String passwordDecrypted=PasswordEncryption.decrypt(professeur.getMotDePasse());
+			String passwordDecrypted=PasswordEncryption.decrypt(professeurInDataBase.get().getMotDePasse());
 			professeur.setMotDePasse(passwordDecrypted);
 			return Optional.ofNullable(professeur);
 		}

@@ -15,4 +15,6 @@ public interface ClasseDao extends JpaRepository<Classe,Long> {
 	public boolean existsByCycleNom(String nom);
 
 	public Collection<Classe> findByIdAndCycleId(Long idClasse, Long idCycle);
+
+	public Collection<Classe> findByProfesseurId(Long idProfesseur);
 }
