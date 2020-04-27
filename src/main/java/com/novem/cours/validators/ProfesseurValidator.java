@@ -96,7 +96,7 @@ public class ProfesseurValidator {
 		for(String idClasse: listeIdClasse) {
 			if((classeDao.getOne(new Long(idClasse)).getProfesseur().getEmail()!=null )) {
 				Classe classe=classeDao.getOne(new Long(idClasse));
-				String message = "la classe "+classe.getNom()+ "a déjà "+classe.getProfesseur().getNom()+ " comme professeur";
+				String message = "la classe "+classe.getNom()+ " a déjà "+classe.getProfesseur().getNom()+ " comme professeur";
 				message+= classe.getProfesseur().isActive()?" et est activé":" Mais n'est pas activé";
 				throw new ProfesseurClassDejaAffecte(message);
 			}

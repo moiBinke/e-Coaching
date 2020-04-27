@@ -104,6 +104,15 @@ public class Professeur implements Serializable{
 				+ motDePasse + ", role=" + role + ", photo=" + photo + ", active=" + active + ", classes=" + classes
 				+ "]";
 	}
+	public Professeur(String nom, String prenom, String email, String motDePasse, Role role, boolean active) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.role = role;
+		this.active = active;
+	}
 	
 	
 
