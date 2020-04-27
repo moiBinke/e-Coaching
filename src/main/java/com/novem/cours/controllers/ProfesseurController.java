@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,7 +85,7 @@ public class ProfesseurController {
 		Map<String, String>errors=new HashMap<String, String>();
 		try {
 			ProfesseurValidator.validateEmailSyntax(professeur.getEmail());
-			ProfesseurValidator.validatePassword(professeur.getMotDePasse());
+			//ProfesseurValidator.validatePassword(professeur.getMotDePasse());
 			return new ResponseEntity<Object>(professeurService.modifierProfesseur(professeur),HttpStatus.OK);
 		} catch (ProfesseurEmailNotCorrect e) {
 			errors.put("erreur", e.getMessage());
@@ -92,10 +93,11 @@ public class ProfesseurController {
 		} catch (ProfesseurEmailExist e) {
 			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
-		} catch (ProfesseurWrongPassword e) {
-			errors.put("erreur", e.getMessage());
-			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		} 
+//		catch (ProfesseurWrongPassword e) {
+//			errors.put("erreur", e.getMessage());
+//			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
+//		} 
 	}
 	
 	@GetMapping("/{idProfesseur}/classes")
@@ -105,5 +107,36 @@ public class ProfesseurController {
 			return Optional.ofNullable(professeur.get().getClasses());
 		}
 		return Optional.empty();
+	}
+	
+	@GetMapping("/chercherByClasse/{idClasse}")
+	public Optional<Professeur> chercherByClasse(@PathVariable("idClasse")Long idClasse){
+		Classe classe=classeDao.getOne(idClasse);
+		if(classe.getProfesseur()==null || (classe.getProfesseur().getEmail()==null && classe.getProfesseur().getMotDePasse()==null)) {
+			return Optional.empty();
+		}
+		Professeur professeur=classe.getProfesseur();
+		//Pour ne pas envoyer toutes les données:
+		Professeur professeurReduit=new Professeur();
+		professeurReduit.setActive(professeur.isActive());
+		professeurReduit.setEmail(professeur.getEmail());
+		professeurReduit.setId(professeur.getId());
+		professeurReduit.setNom(professeur.getNom());
+		professeurReduit.setPrenom(professeur.getPrenom());
+		professeurReduit.setPhoto(professeur.getPhoto());
+		return Optional.of(professeurReduit);
+	}
+	
+	@DeleteMapping("/supprimer/{idProf}")
+	public void supprimerById(@PathVariable("idProf")Long idProf) {
+		
+		Professeur professeur=professeurDao.getOne(idProf);
+		professeur.setEmail(null);
+		professeur.setMotDePasse(null);
+		professeur.setNom(null);
+		professeur.setPrenom(null);
+		professeur.setPhoto(null);
+		professeur.setActive(false);
+		professeurDao.save(professeur);
 	}
 }
