@@ -3,6 +3,7 @@ package com.novem.cours.entities;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Cycle implements Serializable{
 	private Long id;
 	@Column
 	private String nom;
-	@OneToMany(mappedBy = "cycle")
+	@OneToMany(mappedBy = "cycle",cascade = CascadeType.REMOVE)
 	private Collection<Classe> classes;
 	
 	

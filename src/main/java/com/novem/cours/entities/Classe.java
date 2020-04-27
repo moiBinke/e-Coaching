@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class Classe implements Serializable{
 	private Long id;
 	@Column
 	private String nom;
-	@OneToMany(mappedBy = "classe")
+	@OneToMany(mappedBy = "classe",cascade = CascadeType.REMOVE)
 	private Collection<Matiere> matieres;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)

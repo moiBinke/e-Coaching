@@ -39,29 +39,33 @@ public class ProfesseurController {
 	@Autowired private ClasseDao classeDao;
 	
 	
+	@GetMapping("/findAll")
+	public Collection<Professeur>findAll() {
+		return professeurDao.findAll();
+	}
 	
 	@PostMapping("/creer/{lesIdClasses}")
 	public ResponseEntity<Object>  creerProfesseur(@PathVariable("lesIdClasses")String lesIdClasses, 
 			@RequestBody Professeur professeur) {
 		Map<String, String>errors=new HashMap<String, String>();
-		String [] listeIdClasse = lesIdClasses.split("_");
+		String [] listeIdClasse = lesIdClasses.split(",");
 		try {
 			ProfesseurValidator.validate(professeur, classeDao, listeIdClasse,professeurDao);
 			return new ResponseEntity<Object>(professeurService.creerProfesseur(professeur,listeIdClasse),HttpStatus.OK);
 		} catch (ProfesseurEmailNotCorrect e) {
-			errors.put("emailNotCorrectError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);			
 		} catch (ProfesseurEmailExist e) {
-			errors.put("emailExistError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (ProfesseurWrongPassword e) {
-			errors.put("wrongPasswordError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (ProfesseurClassNotFoun e) {
-			errors.put("classeNotExisteError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (ProfesseurClassDejaAffecte e) {
-			errors.put("classeAlreadyAffecetedError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

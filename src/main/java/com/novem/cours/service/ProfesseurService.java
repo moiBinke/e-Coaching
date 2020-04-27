@@ -10,6 +10,7 @@ import com.novem.cours.dao.ClasseDao;
 import com.novem.cours.dao.ProfesseurDao;
 import com.novem.cours.entities.Classe;
 import com.novem.cours.entities.Professeur;
+import com.novem.cours.entities.Role;
 import com.novem.cours.exceptions.ProfesseurException;
 import com.novem.cours.validators.PasswordEncryption;
 
@@ -20,6 +21,8 @@ public class ProfesseurService {
 	@Autowired private ProfesseurDao professeurDao;
 	
 	public Professeur creerProfesseur(Professeur professeur, String[] listeIdClasse) {
+		professeur.setActive(true);
+		professeur.setRole(Role.ROLE_PROFESSEUR);
 		String passwordEncrypted=PasswordEncryption.encrypt(professeur.getMotDePasse());
 		professeur.setMotDePasse(passwordEncrypted);
 		System.out.println(professeur.getMotDePasse());

@@ -23,13 +23,13 @@ public class ProfesseurValidator {
 	private static  Pattern pattern;
     private static Matcher matcher;
   
-    private static final String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%+!]).{8,40})";
+    private static final String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\\\d)(?=.*[A-Z])(?=.*[@#$%+!]).{8,40})";
   
     public static void validate(Professeur professeur, ClasseDao classeDao, String[] listeIdClasse,ProfesseurDao professeurDao) throws ProfesseurEmailNotCorrect,
     ProfesseurEmailExist, ProfesseurWrongPassword, ProfesseurClassNotFoun, ProfesseurClassDejaAffecte {
 		validateEmailSyntax(professeur.getEmail());
 		validateEmailExistence(professeur.getEmail(), professeurDao);
-		validatePassword(professeur.getMotDePasse());
+		//validatePassword(professeur.getMotDePasse());
 		lesClassesExistent(listeIdClasse, classeDao);
 		lesClassesNeSontPasAffectees(listeIdClasse, classeDao);
 	}

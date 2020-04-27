@@ -49,11 +49,11 @@ public class MatiereController {
 				MatiereValidator.validate(classe, matiere.getNom(),matiereDao);
 				return new ResponseEntity<Object>(matiereService.creerMatiere(classe,matiere),HttpStatus.OK);
 			} catch (MatiereNameExistException e) {
-				errors.put("nameError", e.getMessage());
+				errors.put("erreur", e.getMessage());
 				return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 
 			} catch (MatiereClassNotFoundException e) {
-				errors.put("classeNotExistsErrors", e.getMessage());
+				errors.put("erreur", e.getMessage());
 				return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
