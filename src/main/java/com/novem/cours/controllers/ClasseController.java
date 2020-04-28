@@ -58,11 +58,11 @@ public class ClasseController {
 			return new ResponseEntity<Object>(classeService.creerClasse(classe,cycle),HttpStatus.OK);
 
 		} catch (ClasseHasNoCycleException e) {
-			errors.put("cycleNotExistsErrors", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 
 		} catch (ClasseNameExistException e) {
-			errors.put("nameError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

@@ -35,6 +35,8 @@ public class ProfesseurService {
 			classeDao.save(classe);
 			professeurDao.delete(professeurInDataBase);
 		}
+		
+		professeur.setMotDePasse(PasswordEncryption.decrypt(professeur.getMotDePasse()));
 		return professeur;
 	}
 

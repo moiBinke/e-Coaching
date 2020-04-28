@@ -1,5 +1,6 @@
 package com.novem.cours.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,20 @@ public class CycleController {
 	public Collection<Cycle>findAll() {
 		return cycleDao.findAll();
 	}
+	
+	@GetMapping("/cycleReduits")
+	public Collection<Cycle>findAllReduced() {
+		Collection<Cycle> cycles= cycleDao.findAll();
+		ArrayList<Cycle> cyclesReduits = new ArrayList<>();
+		for(Cycle cycle:cycles) {
+			cyclesReduits.add(cycle);
+		}
+		return cyclesReduits;
+	}
+	private Cycle mettreANull(Cycle cycle) {
+		cycle.setClasses(null);
+		return cycle;
+	}
 	@PostMapping("/creer")
 	public ResponseEntity<Object> creerCycle(@RequestBody Cycle cycle){
 		Map<String,String> errors=new HashMap();
@@ -39,7 +54,7 @@ public class CycleController {
 			CycleValidator.validate(cycle.getNom(),cycleDao);
 			return new ResponseEntity<Object>(serviceCycle.creerCycle(cycle),HttpStatus.OK);
 		} catch (CycleNameExistException e) {
-			errors.put("nameError", e.getMessage());
+			errors.put("erreur", e.getMessage());
 			return new ResponseEntity<Object>(errors,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

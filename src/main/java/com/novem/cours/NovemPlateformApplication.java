@@ -26,7 +26,7 @@ public class NovemPlateformApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Professeur admin = new Professeur("COULIBALY", "Issa", "hahah@gmail.com", PasswordEncryption.encrypt("KaIsAdAmNovem"), Role.ROLE_ADMIN, true); 
+		Professeur admin = new Professeur("COULIBALY", "Issa", "icoulibaly@excilys.com", PasswordEncryption.encrypt("KaIsAdAmNovem"), Role.ROLE_ADMIN, true); 
 		this.professeurDao.save(admin);
 	}
 
