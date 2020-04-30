@@ -11,8 +11,6 @@ import com.novem.cours.entities.Professeur;
 import com.novem.cours.entities.Role;
 import com.novem.cours.validators.PasswordEncryption;
 
-import springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @SpringBootApplication
 public class NovemPlateformApplication implements CommandLineRunner{
