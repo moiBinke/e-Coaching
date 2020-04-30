@@ -15,8 +15,6 @@ import springfox.documentation.spring.data.rest.configuration.SpringDataRestConf
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @SpringBootApplication
-@EnableSwagger2WebMvc
-@Import({SpringDataRestConfiguration.class})
 public class NovemPlateformApplication implements CommandLineRunner{
 
 	@Autowired private ProfesseurDao professeurDao;
